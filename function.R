@@ -2,11 +2,13 @@ common_father(obs1,obs2)
 				{
 					o1<-obs1
 					o2<-obs2				
-					b<-bfs$dist[o2]	
-					a<-bfs$dist[o1]				
-					if(a<=b)
+									
+					if(bfs$dist[o2]<=bfs$dist[o1])
 						{
-							diff<- b-a
+							o1<-obs2
+							o2<-obs1
+						}
+							diff<- bfs$dist[o2]-bfs$dist[o1]
 							while (diff!=0)#to keep them in one level in tree
 							{
 								node_b<- father(o2)
@@ -38,7 +40,7 @@ common_father(obs1,obs2)
 							}
 
 						}
-					}#what when a>b?????
+					}
 
 
 
