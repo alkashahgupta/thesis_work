@@ -12,11 +12,9 @@ obsnum<-
 char obs[Tien,Vu,Vien2]
 N<- vcount(ful_n_frame)
 
-While(N>=0)
-{
-	for(i=0, i>= N, i++)
+	for(i=0, i<= N, i++)
 	{
-		bfs<-graph.bfs (ful_n_frame, root=1, order=TRUE, rank=TRUE, father=TRUE, 			pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
+		bfs<-graph.bfs (ful_n_frame, root=1, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE) # create breadth first tree
 			for(ob=1,ob<=obsnum,ob++)
 				{
 					obsdist[ob]<-bfs$dist[bfs$order[vertex.id(obs[ob])]]					
@@ -28,13 +26,13 @@ While(N>=0)
 						{
 							if(ob==var)
 								{							
-								covarance[ob][var]<-stddev*stddev*obs
+								covarance[ob][var]<-stddev*stddev*obs#here i need function to find common path between observers
 						}					
 				
 				}
 	
 	}
-}
+
 names<- get.vertex.attribute(ful_n_frame, "name")
 
 
@@ -42,23 +40,29 @@ names<- get.vertex.attribute(ful_n_frame, "name")
 
 
 
-To find common c_father 
+# To find common path for covariance  
 for (k=1, k<= numobs-1, k++)
 	for(i=1,i<=numobs-1, i++)
 		{
-			if (k==i)
+			if (k==i)#it give path between reference observer and other observers
 				{
 					a<- father(o1)
 					b<- father(o(k+1))
-					c_father =0
+					path=0
 
 					if(a==b)
 					{
-						c_father=2*c_father
+						path=2
+						
 					}
 
 					else
-					{
+					{see which is more farther than root
+					then keep them in one level going up and counting the move too say p
+					see if they have common father
+					if not then move up to have common father and count the move simaltaneously say q
+					finally path =  p +2q
+					 
 
 
 					}
@@ -66,7 +70,7 @@ for (k=1, k<= numobs-1, k++)
 
 				}
 
-			else
+			else#here we will find the common path between two pairs of reference observer and other observers
 			{			
 				c_father_o1_o2<- common_father(o1,o2)
 				c_father_o1_o3<- common_father(o1,o3)
