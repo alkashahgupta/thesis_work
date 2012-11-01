@@ -78,11 +78,11 @@ for (k=1, k<= numobs-1, k++)
 					if(c_father_o1_o2==c_father_o1_o3)
 					{
 						
-						path= bfs$dist[o1] +dist(between common father of o1,o2 and o3,o2 )
+						path= bfs$dist[o1]-bfs$dist[commonfather either i.e c_father_o1_o2 or c_father_o1_o3] +bfs$dist(c_father_o2_o3)-bfs$dist[commonfather either i.e c_father_o1_o2 or c_father_o1_o3] #-ve distance of common father if common father is not root. 
 					}
 					else
 					{
-						path= bfs$dist[o1]
+						path= bfs$dist[o1]-mod(bfs$dist[c_father_o1_o2]-bfs$dist[c_father_o1_o3])
 					}		
 			}
 		}  
