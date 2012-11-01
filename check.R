@@ -42,7 +42,7 @@ names<- get.vertex.attribute(ful_n_frame, "name")
 
 
 
-To find common path 
+To find common c_father 
 for (k=1, k<= numobs-1, k++)
 	for(i=1,i<=numobs-1, i++)
 		{
@@ -50,11 +50,11 @@ for (k=1, k<= numobs-1, k++)
 				{
 					a<- father(o1)
 					b<- father(o(k+1))
-					path =0
+					c_father =0
 
 					if(a==b)
 					{
-						path=2*path
+						c_father=2*c_father
 					}
 
 					else
@@ -67,47 +67,19 @@ for (k=1, k<= numobs-1, k++)
 				}
 
 			else
-			{
-				p=k
-				a<-bfs$dist[o1]
-				while(p!=i)
-				{					
-					b<-bfs$dist[o(p+1)]					
-					if(a<=b)
-						{
-							diff<- b-a
-							while (diff!=0)
-							{
-								node_b<- father(o(p+1))
-								o(p+1)<- node_b
-								diff--
-							}
-			
-							if (father[o1]==father[o(p+1)])
-							{
-								commanfather[p]<-father[o1]
-							}
-			
-							else
-							{
-								q<-father[o1]
-								L<- father[o(p+1)]
-								m<-0
-								while(q!=L)
-								{
-									o1<-q
-									o(p+1)<-L
-									q<-father[o1]
-									L<-father[o(p+1)]
-									m++
-								}
-								commanfather[p]<-q
-							}
-
-						}
-					p=i
-				}
-							
+			{			
+				c_father_o1_o2<- common_father(o1,o2)
+				c_father_o1_o3<- common_father(o1,o3)
+				c_father_o2_o3<- common_father(o2,o3)
+					if(c_father_o1_o2==c_father_o1_o3)
+					{
+						
+						path= bfs$dist[o1] +dist(between common father of o1,o2 and o3,o2 )
+					}
+					else
+					{
+						path= bfs$dist[o1]
+					}		
 			}
 		}  
 
