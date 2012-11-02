@@ -91,17 +91,7 @@ common_path(obs k,obs i)
 }  
 
 
- mul(float x[k][1],float y[10][10],int z[10][10],int m,int n,int p,int q)
-  {
-    for (i=0;i<m;i++)
-       for(j=0;j<q;j++)
-       {
-	  z[i][j]=0;
-	  for(k=0;k<n;k++)
-	      z[i][j]+= x[i][k]*y[k][j];
-       }
  
-  }
 
 
 
