@@ -57,7 +57,7 @@ N<- vcount(ful_n_frame)
 
 	}
 
-names<- get.vertex.attribute(ful_n_frame, "name")
+part_source<-max(source[
 
 
          
