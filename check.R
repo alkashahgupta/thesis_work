@@ -1,6 +1,6 @@
 x<-read.csv ("measure.csv")
 fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
-mintime <- min(x)
+mintime <- min(x)#here either we have to take min time or take one observer as reference and substract mode of that number from other 
 d<-x-mintime
 library(igraph)
 ful_n_frame<- graph.data.frame(fulnetwork)
@@ -14,14 +14,14 @@ N<- vcount(ful_n_frame)
 
 	for(i=0, i<= N, i++)
 	{
-		bfs<-graph.bfs (ful_n_frame, root=1, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE) # create breadth first tree
+		bfs<-graph.bfs (ful_n_frame, root=pos(names[i+1])..., order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE) # create breadth first tree 
 			for(ob=1,ob<=obsnum,ob++)
 				{
 					obsdist[ob]<-bfs$dist[bfs$order[vertex.id(obs[ob])]]					
 				}
 				for(ob=1,ob<=obsnum,ob++)
 				{					
-					detmean[ob][1]<-Mean*(obsdist[ob+1]-obsdist[ob])
+					detmean[ob][1]<-Mean*(obsdist[ob+1]-obsdist[1])
 					for(var=1,var<=obsnum,var++)
 						{
 							covarance[ob][var]<-stddev*stddev*commonpath(ob,var)#here i need function to find common path between observers
@@ -33,13 +33,12 @@ N<- vcount(ful_n_frame)
 					{
 						detmean_Transpose[i][j]<-detmean[j][i]
 					}
-
 				for (i=0;i<1;i++)
 					   for(j=0;j<k;j++)
 					   {
 					  	pro_detmean_covariance[i][j]=0;
 					  for(p=0;p<k;p++)
-						  pro_detmean_covariance[i][j]+= detmean_Transpose[i][p]*covariance[p][j];
+						  pro_detmean_covariance[i][j]+= detmean_Transpose[i][p]*solve(covariance[p][j]);#solve give inverse of a matrix
 						}
 				for (i=0;i<k;i++)
 					   for(j=0;j<1;j++)
