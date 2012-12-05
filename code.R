@@ -1,7 +1,10 @@
-x<-read.csv ("measure.csv")
+obs_meas<-read.csv ("measure.csv")
+obs_meas_df<-data.frame(obs_meas)
 fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
-mintime <- min(x)
-d<-x-mintime
+Mean<-sapply(obs_meas_df, mean)
+variance<var(obs_meas_df)
+mintime <- sapply(obs_meas_df, min)
+d<-obs_meas_df-mintime
 library(igraph)
 ful_n_frame<- graph.data.frame(fulnetwork)
 # plot(ful_n_frame)

@@ -1,4 +1,5 @@
-x<-read.csv ("measure.csv")
+obs_meas<-read.csv ("measure.csv")
+obs_meas_df<-data.frame(obs_meas)
 fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
 mintime <- min(x)#here either we have to take min time or take one observer as reference and substract mode of that number from other 
 d<-x-mintime
@@ -6,7 +7,7 @@ library(igraph)
 ful_n_frame<- graph.data.frame(fulnetwork)
 # plot(ful_n_frame)
 
-Mean<- 
+Mean<-
 stddev<-
 obsnum<-
 char obs[Tien,Vu,Vien2]
