@@ -3,6 +3,7 @@ obs_meas_df<-data.frame(obs_meas)
 fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
 Mean<-sapply(obs_meas_df, mean)
 varianc <- var(obs_meas_df)
+#print(varianc)
 mintime <- sapply(obs_meas_df, min)
 d<-obs_meas_df-mintime
 library(igraph)
@@ -25,27 +26,34 @@ o1<-b[1]
 common_father<-function(obs1,obs2)
 				{
 					o2<-obs1
-					o3<-obs2				
-									
-					if(bfs$dist[o3]<=bfs$dist[o2])
+					o3<-obs2
+#print(o2)
+#Print(o3)
+					if(bfs$dist[o3]< bfs$dist[o2])
 						{
 							o2<-obs2
 							o3<-obs1
+
 						}
+							
+#print(bfs$dist[o3])
+#print(bfs$dist[o2])						
 							diff<- bfs$dist[o3]-bfs$dist[o2]
+#print(diff)
 							while (diff!=0)#to keep them in one level in tree
 							{
 								node_b<- bfs$father[o3]
 								o3<- node_b
 								diff<-diff-1
+								
 							}
 							if (o3==o2)
 							{
-							commanfather<-o2
+							commonfather<-o2
 							}
-else if (bfs$father[o2]==bfs$father[o3])#to check if there parent are same or not
+							else if (bfs$father[o2]==bfs$father[o3])#to check if there parent are same or not
 							{
-								commonfather<-bfs$father[o2]
+								commonfather<-bfs$father[o3]
 								return(commonfather)
 							}
 			
@@ -63,10 +71,13 @@ else if (bfs$father[o2]==bfs$father[o3])#to check if there parent are same or no
 									m<-m+1 #to record the number of path moved up
 								}
 								commonfather<-q
+#print(commonfather)
+
 								return(commonfather)
 							}
-
-						
+			
+								
+					
 					}
 
 commonpathe <- function(k,l) #we don't need any information of observer.Simply the value of k and i which is used as intforpositionof matrix 
@@ -75,9 +86,9 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 				if (k==l)#it give path between reference observer and other observers
 					{
 						a<- bfs$father[o1]#here i need to keep the position of reference observer 
-						b<- bfs$father[b[k+1]]
+						d<- bfs$father[b[k+1]]
 						
-						if(a==b)
+						if(a==d)
 						{
 							path=2
 							return(path)
@@ -99,12 +110,15 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 					c_father_o1_o2<- common_father(o1,b[2])
 					c_father_o1_o3<- common_father(o1,b[3])
 					c_father_o2_o3<- common_father(b[2],b[3])
+print(c_father_o2_o3)
+
 						if(c_father_o1_o2==c_father_o1_o3)
 						{
 						
 							path= bfs$dist[o1]-bfs$dist[ c_father_o1_o2 ] + 
 							bfs$dist[c_father_o2_o3]-bfs$dist[ c_father_o1_o2] #-ve distance of common father if common father is not root. 
 							return(path)
+							
 						}
 						else
 						{
@@ -124,11 +138,11 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
  for(i in seq(1:a))
 	{
 	bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
-	print(bfs$dist[bfs$order[2]])
+	#print(bfs$dist[bfs$order[2]])
 	for(ob in seq(1:obsnum))
 		{b<-c(295,70,212)
 			obsdist[ob]<-bfs$dist[b[ob]]
-print(obsdist[ob])				
+#print(obsdist[ob])				
 		}
 w<-1
 for(ob in seq(1:(obsnum-1)))
@@ -140,9 +154,11 @@ for(ob in seq(1:(obsnum-1)))
 						{
 							
 							temp<-commonpathe(ob,varim)#see here
+#print(temp)
 							covarance[w]<-varianc*temp#here i need function to find common path between observers
-							w<-w+1
-							print(path)
+#print(covarance[w])							
+w<-w+1
+							
 
 						}
 				}
