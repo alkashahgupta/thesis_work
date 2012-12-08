@@ -15,8 +15,12 @@ common_father(obs1,obs2)
 								o2<- node_b
 								diff--
 							}
+							if (o2==o1)
+							{
+							commanfather<-o1
+							}
 			
-							if (father[o1]==father[o2])#to check if there parent are same or not
+							else if (father[o1]==father[o2])#to check if there parent are same or not
 							{
 								commonfather<-father[o1]
 								return(commonfather)
@@ -44,15 +48,15 @@ common_father(obs1,obs2)
 
 
 # To find common path for covariance
-common_path(obs k,obs i)  
+common_path(obs k,obs i) #here we don't need any information of observer. Simply the value of k and i which is used as int for position of matrix 
 {
 	for (k=1, k<= numobs-1, k++)
 		for(i=1,i<=numobs-1, i++)
 			{
 				if (k==i)#it give path between reference observer and other observers
 					{
-						a<- father(o1)
-						b<- father(o(k+1))
+						a<- bfs$father(o1)#here i need to keep the position of reference observer 
+						b<- bfs$father(o(k+1))
 						path=0
 
 						if(a==b)
