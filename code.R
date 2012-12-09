@@ -1,11 +1,17 @@
 obs_meas<-read.csv ("measure.csv")
 obs_meas_df<-data.frame(obs_meas)
 fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
+obsnum<-3
 Mean<-sapply(obs_meas_df, mean)
 varianc <- var(obs_meas_df)
 #print(varianc)
-mintime <- sapply(obs_meas_df, min)
-d<-obs_meas_df-mintime
+#mintime <- sapply(obs_meas_df, min)
+d<-list()
+for(i in seq(1:(obsnum-1)))
+{
+d[i]<-obs_meas_df[i+1,1]-obs_meas_df[1,1]
+}
+#d<-obs_meas_df-mintime
 library(igraph)
 ful_n_frame<- graph.data.frame(fulnetwork)
 # plot(ful_n_frame)
@@ -14,7 +20,7 @@ N<- vcount(ful_n_frame)
 
 names<- get.vertex.attribute(ful_n_frame, "name")
 a<-1
-obsnum<-3
+s<-list()
 obsdist<-list()
 detmean<-list()
 covarance<-list()
@@ -86,9 +92,9 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 				if (k==l)#it give path between reference observer and other observers
 					{
 						a<- bfs$father[o1]#here i need to keep the position of reference observer 
-						d<- bfs$father[b[k+1]]
+						e<- bfs$father[b[k+1]]
 						
-						if(a==d)
+						if(a==e)
 						{
 							path=2
 							return(path)
@@ -110,7 +116,7 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 					c_father_o1_o2<- common_father(o1,b[2])
 					c_father_o1_o3<- common_father(o1,b[3])
 					c_father_o2_o3<- common_father(b[2],b[3])
-print(c_father_o2_o3)
+#print(c_father_o2_o3)
 
 						if(c_father_o1_o2==c_father_o1_o3)
 						{
@@ -122,7 +128,7 @@ print(c_father_o2_o3)
 						}
 						else
 						{
-							path= bfs$dist[o1]-mod(bfs$dist[c_father_o1_o2]-bfs$dist[c_father_o1_o3])
+							path= bfs$dist[o1]-abs(bfs$dist[c_father_o1_o2]-bfs$dist[c_father_o1_o3])
 							return(path)
 						}
 							
@@ -135,7 +141,7 @@ print(c_father_o2_o3)
 
 
 
- for(i in seq(1:a))
+ for(i in seq(1:N))
 	{
 	bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
 	#print(bfs$dist[bfs$order[2]])
@@ -162,7 +168,26 @@ w<-w+1
 
 						}
 				}
+		matrix_order<-obsnum-1
+
+
+		mat1<-matrix(covarance,matrix_order,matrix_order)
+		mat2<-matrix(detmean, matrix_order)
+		mat3<-matrix(d,matrix_order)
+		transpose_detmean<-t(as.matrix(as.numeric(mat2)))
+		covarance_inverse<-solve(mat1)
+		Prod_det_cov<-transpose_detmean %*% covarance_inverse
+		sub_delay_det<-(as.matrix(as.numeric(mat3)))-(as.matrix(as.numeric(mat2)))
+		s[i]<-Prod_det_cov %*% sub_delay_det
+
+
 
 	}
+s_sort<-sort(as.numeric(s), index.return = TRUE)
+s_node<-s_sort$ix[N]
+
+s_vertex<-names[s_node]
+print(s_vertex)
+
 
 		
