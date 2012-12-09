@@ -187,7 +187,7 @@ s_sort<-sort(as.numeric(s), index.return = TRUE)
 s_node<-s_sort$ix[N]
 
 s_vertex<-names[s_node]
-print(s_vertex)
+print(s_vertex)# finally done..this is a source vertex
 
 
 		
