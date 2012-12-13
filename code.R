@@ -143,6 +143,13 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
+	if(i==295|i==70|i==212)
+	{
+	i<-i+1
+	}
+
+	
+	
 	bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
 	#print(bfs$dist[bfs$order[2]])
 	for(ob in seq(1:obsnum))
