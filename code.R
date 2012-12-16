@@ -1,6 +1,6 @@
-obs_meas<-read.csv ("measure.csv")
+obs_meas<-read.csv ("measure1.csv")
 obs_meas_df<-data.frame(obs_meas)
-fulnetwork<- read.csv("relations bimode simplified max.csv", header = TRUE,sep = "\t")
+fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
 obsnum<-3
 Mean<-sapply(obs_meas_df, mean)
 varianc <- var(obs_meas_df)
@@ -13,10 +13,11 @@ d[i]<-obs_meas_df[i+1,1]-obs_meas_df[1,1]
 }
 #d<-obs_meas_df-mintime
 library(igraph)
-ful_n_frame<- graph.data.frame(fulnetwork)
+ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
 # plot(ful_n_frame)
 
 N<- vcount(ful_n_frame)
+
 
 names<- get.vertex.attribute(ful_n_frame, "name")
 a<-1
@@ -26,7 +27,7 @@ detmean<-list()
 covarance<-list()
 
 length(obsdist)<-obsnum
-b<-c(295,70,212)
+b<-c(6,7,8)
 o1<-b[1]
 
 common_father<-function(obs1,obs2)
@@ -93,7 +94,7 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 					{
 						a<- bfs$father[o1]#here i need to keep the position of reference observer 
 						e<- bfs$father[b[k+1]]
-						
+					
 						if(a==e)
 						{
 							path=2
@@ -143,17 +144,17 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
-	if(i==295|i==70|i==212)
+	if(i==b[1]|i==b[2]|i==b[3])
 	{
-	i<-i+1
+	next
 	}
 
-	
+	print(i)
 	
 	bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
 	#print(bfs$dist[bfs$order[2]])
 	for(ob in seq(1:obsnum))
-		{b<-c(295,70,212)
+		{b<-c(6,7,8)
 			obsdist[ob]<-bfs$dist[b[ob]]
 #print(obsdist[ob])				
 		}
@@ -191,7 +192,7 @@ w<-w+1
 
 	}
 s_sort<-sort(as.numeric(s), index.return = TRUE)
-s_node<-s_sort$ix[N]
+s_node<-s_sort$ix[1]
 
 s_vertex<-names[s_node]
 print(s_vertex)# finally done..this is a source vertex
