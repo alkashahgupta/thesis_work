@@ -1,9 +1,11 @@
-obs_meas<-read.csv ("measure1.csv")
-obs_meas_df<-data.frame(obs_meas)
+#obs_meas<-read.csv ("measure2.csv")
+#obs_meas_df<-data.frame(obs_meas)
 fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
 
-Mean<-sapply(obs_meas_df, mean)
-varianc <- var(obs_meas_df)
+#delay per hour in edges
+a<-1
+Mean<-1
+varianc <- 2
 #print(varianc)
 #mintime <- sapply(obs_meas_df, min)
 
@@ -18,10 +20,10 @@ covarance<-list()
 
 
 #calculation of delay vector
-for(i in seq(1:(obsnum-1)))
-{
-d[i]<-obs_meas_df[i+1,1]-obs_meas_df[1,1]
-}
+#for(i in seq(1:(obsnum-1)))
+#{
+#d[i]<-obs_meas_df[i+1,1]-obs_meas_df[1,1]
+#}
 
 library(igraph)
 ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
@@ -41,7 +43,10 @@ common_father<-function(obs1,obs2)
 					o2<-obs1
 					o3<-obs2
 #print(o2)
-#Print(o3)
+#print(o3)
+#print(bfs$dist[o3])
+#print(bfs$dist[o2])
+
 					if(bfs$dist[o3]< bfs$dist[o2])
 						{
 							o2<-obs2
@@ -154,15 +159,24 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 	{
 		if(i==b[1]|i==b[2]|i==b[3])
 		{
+		s[i]=0
 		next
 		}
+
 
 		print(i)
 	
 		bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
 #print(bfs$dist[bfs$order[2]])
+
+
+		for(dis in seq(1:(obsnum-1)))
+			{
+			d[dis]<-bfs$dist[b[dis+1]]-bfs$dist[b[1]]
+			}
+
 		for(ob in seq(1:obsnum))
-			{b<-c(6,7,8)
+			{
 				obsdist[ob]<-bfs$dist[b[ob]]
 #print(obsdist[ob])				
 			}
