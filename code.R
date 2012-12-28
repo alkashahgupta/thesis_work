@@ -1,15 +1,23 @@
+library(igraph)
 #obs_meas<-read.csv ("measure2.csv")
 #obs_meas_df<-data.frame(obs_meas)
-fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
+#fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
+testgraph<-read.csv("RandomGraphMatrix.csv",sep=",",header = FALSE)
+#ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
+ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
+# plot(ful_n_frame)
+#plot(g2,vertex.size=1)
 
+
+#plot(g2)
 #delay per hour in edges
 a<-1
-Mean<-1
-varianc <- 2
+Mean<-1.75
+varianc <- 0.56
 #print(varianc)
 #mintime <- sapply(obs_meas_df, min)
 
-obsnum<-3
+
 
 #variable intialization as a list
 d<-list()
@@ -19,23 +27,32 @@ detmean<-list()
 covarance<-list()
 
 
-#calculation of delay vector
+
 #for(i in seq(1:(obsnum-1)))
 #{
 #d[i]<-obs_meas_df[i+1,1]-obs_meas_df[1,1]
 #}
 
-library(igraph)
-ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
-# plot(ful_n_frame)
+
+
+
 
 N<- vcount(ful_n_frame)
 names<- get.vertex.attribute(ful_n_frame, "name")
+obsnum<-3
 length(obsdist)<-obsnum
 
 #observer id are to be entered here
-b<-c(6,7,8)
+#b<-c(38,33,26)
+#b<-c(6,7,8)
+b<-c(42,54,62)
 o1<-b[1]
+
+#calculation of delay vector
+#for(dis in seq(1:(obsnum-1)))
+			#{
+			#d[dis]<-shortest.paths(ful_n_frame, v=b[dis+1],to=o1)
+			#}
 
 #function to find common father
 common_father<-function(obs1,obs2)
@@ -157,14 +174,14 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
-		if(i==b[1]|i==b[2]|i==b[3])
+		if(i==b[1]|i==b[2]|i==b[3])#|i==b[4]|i==b[5])
 		{
 		s[i]=0
 		next
 		}
 
 
-		print(i)
+		#print(i)
 	
 		bfs<-graph.bfs (ful_n_frame, root=i, order=TRUE, rank=TRUE, father=TRUE, pred=TRUE, succ=TRUE, dist=TRUE,unreachable= FALSE)
 #print(bfs$dist[bfs$order[2]])
@@ -174,6 +191,8 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 			{
 			d[dis]<-bfs$dist[b[dis+1]]-bfs$dist[b[1]]
 			}
+#print(d)
+
 
 		for(ob in seq(1:obsnum))
 			{
@@ -206,15 +225,17 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 		transpose_detmean<-t(as.matrix(as.numeric(mat2)))
 		covarance_inverse<-solve(mat1)
 		Prod_det_cov<-transpose_detmean %*% covarance_inverse
-		sub_delay_det<-(as.matrix(as.numeric(mat3)))-(as.matrix(as.numeric(mat2)))
+
+		sub_delay_det<-(as.matrix(as.numeric(mat3)))-0.5 * (as.matrix(as.numeric(mat2)))
 		s[i]<-Prod_det_cov %*% sub_delay_det
+#print((as.matrix(as.numeric(mat2))))
 
 
 
 	}
 
 s_sort<-sort(as.numeric(s), index.return = TRUE)
-s_node<-s_sort$ix[1]
+s_node<-s_sort$ix[N]
 
 s_vertex<-names[s_node]
 print(s_vertex)# finally done..this is a source vertex
