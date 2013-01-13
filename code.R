@@ -2,7 +2,7 @@ library(igraph)
 #obs_meas<-read.csv ("measure2.csv")
 #obs_meas_df<-data.frame(obs_meas)
 #fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
-testgraph<-read.csv("RandomGraphMatrix.csv",sep=",",header = FALSE)
+testgraph<-read.csv("SmallWorldGraphMatrix.csv",sep=",",header = FALSE)
 #ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
 ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 # plot(ful_n_frame)
@@ -45,7 +45,8 @@ length(obsdist)<-obsnum
 #observer id are to be entered here
 #b<-c(38,33,26)
 #b<-c(6,7,8)
-b<-c(42,54,62)
+b<-c(38,52,18,97,5  )
+print(b)
 o1<-b[1]
 
 #calculation of delay vector
@@ -174,7 +175,7 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
-		if(i==b[1]|i==b[2]|i==b[3])#|i==b[4]|i==b[5])
+		if(i==b[1]|i==b[2]|i==b[3]|i==b[4]|i==b[5])
 		{
 		s[i]=0
 		next
@@ -219,11 +220,22 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 			}
 
 		matrix_order<-obsnum-1
+#print(covarance)
 		mat1<-matrix(covarance,matrix_order,matrix_order)
+#mat1<-matrix((as.matrix(as.numeric(mat5))),matrix_order,matrix_order)
+
 		mat2<-matrix(detmean, matrix_order)
 		mat3<-matrix(d,matrix_order)
 		transpose_detmean<-t(as.matrix(as.numeric(mat2)))
+
+		if(det(mat1)==0)
+		{
+		s[i]=0
+		next
+		}
+
 		covarance_inverse<-solve(mat1)
+
 		Prod_det_cov<-transpose_detmean %*% covarance_inverse
 
 		sub_delay_det<-(as.matrix(as.numeric(mat3)))-0.5 * (as.matrix(as.numeric(mat2)))
