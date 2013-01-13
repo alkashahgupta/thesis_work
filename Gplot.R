@@ -1,6 +1,6 @@
 library(sna)
 library(network)
-newa<- read.csv("Random02.csv", header = TRUE,sep = ",")
+newa<- read.csv("ScaleFree01.csv", header = TRUE,sep = ",")
  aja <- data.frame(newa$Node,newa$Source)
 
 FDnflo <- network(aja, directed=FALSE)
