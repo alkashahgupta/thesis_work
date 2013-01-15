@@ -12,8 +12,8 @@ ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 #plot(g2)
 #delay per hour in edges
 a<-1
-Mean<-1.75
-varianc <- 0.56
+Mean<-2.875
+varianc <- 1.58775
 #print(varianc)
 #mintime <- sapply(obs_meas_df, min)
 
@@ -39,13 +39,13 @@ covarance<-list()
 
 N<- vcount(ful_n_frame)
 names<- get.vertex.attribute(ful_n_frame, "name")
-obsnum<-3
+obsnum<-4
 length(obsdist)<-obsnum
 
 #observer id are to be entered here
 #b<-c(38,33,26)
 #b<-c(6,7,8)
-b<-c(38,52,18,97,5  )
+b<-c(58,31,84,12 )
 print(b)
 o1<-b[1]
 
@@ -175,7 +175,7 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
-		if(i==b[1]|i==b[2]|i==b[3]|i==b[4]|i==b[5])
+		if(i==b[1]|i==b[2]|i==b[3]|i==b[4])#|i==b[5])
 		{
 		s[i]=0
 		next
