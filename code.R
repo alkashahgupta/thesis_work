@@ -2,7 +2,7 @@ library(igraph)
 #obs_meas<-read.csv ("measure2.csv")
 #obs_meas_df<-data.frame(obs_meas)
 #fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
-testgraph<-read.csv("SmallWorldGraphMatrix.csv",sep=",",header = FALSE)
+testgraph<-read.csv("RandomGraphMatrix.csv",sep=",",header = FALSE)
 #ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
 ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 # plot(ful_n_frame)
@@ -14,6 +14,8 @@ ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 a<-1
 Mean<-2.875
 varianc <- 1.58775
+#Mean<-1.75
+#varianc <- 0.56
 #print(varianc)
 #mintime <- sapply(obs_meas_df, min)
 
@@ -45,7 +47,7 @@ length(obsdist)<-obsnum
 #observer id are to be entered here
 #b<-c(38,33,26)
 #b<-c(6,7,8)
-b<-c(58,31,84,12 )
+b<-c( 36 ,73 ,97 , 2    )
 print(b)
 o1<-b[1]
 
@@ -175,11 +177,11 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 
  for(i in seq(1:N))
 	{
-		if(i==b[1]|i==b[2]|i==b[3]|i==b[4])#|i==b[5])
-		{
-		s[i]=0
-		next
-		}
+		#if(i==b[1]|i==b[2]|i==b[3]|i==b[4])#|i==b[5])
+		#{
+		#s[i]=0
+		#next
+		#}
 
 
 		#print(i)
@@ -251,6 +253,6 @@ s_node<-s_sort$ix[N]
 
 s_vertex<-names[s_node]
 print(s_vertex)# finally done..this is a source vertex
-
+print(length(unique(s_sort$x)))
 
 		
