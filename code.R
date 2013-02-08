@@ -2,7 +2,7 @@ library(igraph)
 #obs_meas<-read.csv ("measure2.csv")
 #obs_meas_df<-data.frame(obs_meas)
 #fulnetwork<- read.csv("relations bimode simplified max1.csv", header = TRUE,sep = "\t")
-testgraph<-read.csv("RandomGraphMatrix.csv",sep=",",header = FALSE)
+testgraph<-read.csv("ScaleFreeGraphMatrix.csv",sep=",",header = FALSE)
 #ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
 ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 # plot(ful_n_frame)
@@ -12,8 +12,8 @@ ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 #plot(g2)
 #delay per hour in edges
 a<-1
-Mean<-2.875
-varianc <- 1.58775
+Mean<-4.08
+varianc <- 2.08
 #Mean<-1.75
 #varianc <- 0.56
 #print(varianc)
