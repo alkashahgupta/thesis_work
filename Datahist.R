@@ -1,0 +1,28 @@
+png(file= "testsw.png", height=700, width=700,bg="white" )
+
+par(mfrow=c(3,2))
+Pathinfo<-read.csv("test2.csv",header=T,sep=",")
+#Pathinfosf<-read.csv("4obsfsirmean.csv",header=T,sep=",")
+#Pathinfosw<-read.csv("4obswsirmean.csv",header=T,sep=",")
+# barplot(Pathinfo, main="Network", ylab= "Total", beside=TRUE, col=rainbow(10))
+#Hoperror <- c(Pathinfo$Random, Pathinfo$ScaleFree, Pathinfo$Smallworld)
+#hist(Hoperror, col="lightblue", freq=FALSE)
+#dotchart(t(Pathinfo), color=c("red","blue","darkgreen"),main="Dotchart for Autos", cex=0.8)
+colsw<-c("red", "yellow", "green", "violet", "orange", "blue", "pink", "cyan", "Black","white")
+colsf<-c("red","yellow", "green", "violet", "orange", "blue", "pink", "cyan","black")
+colrn<-c( "red","yellow", "green", "violet", "orange", "blue", "pink", "cyan","black")
+#hist(Pathinfo$Random, col=colrn, freq=FALSE,breaks=c(0:8),ylim=c(0,0.5),labels = TRUE,xlim=c(0,10),include.lowest=TRUE,right = FALSE)
+#hist(Pathinfo$ScaleFreeac, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE)
+#hist(Pathinfo$ScaleFree5, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE)
+#hist(Pathinfo$ScaleFreesir1, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE)
+hist(Pathinfo$SmallWorld1, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "5obs n no deg")
+hist(Pathinfo$SmallWorld2, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "8obs n no deg")
+hist(Pathinfo$SmallWorld5, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "10 obs")
+hist(Pathinfo$SmallWorld6, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "20 obs")
+hist(Pathinfo$SmallWorld3, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "5 obs n deg>3")
+hist(Pathinfo$SmallWorld4, col=colsf, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE, xlim=c(0,10),include.lowest=TRUE,right = FALSE,main = "8obs n deg>3")
+
+
+
+#hist(Pathinfo$SmallWorld, col=colsw, freq=FALSE,breaks=c(0:10),ylim=c(0,0.5),labels = TRUE,xlim=c(0,10),include.lowest=TRUE,right = FALSE)
+dev.off()
