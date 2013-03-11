@@ -1,7 +1,7 @@
 library(igraph)
 library(MASS)
-testgraph<-read.csv("SmallWorldGraphMatrix.csv",sep=",",header = FALSE)
-Edgevalue<-read.csv("swedge.csv",header = TRUE,sep = ",")
+testgraph<-read.csv("RandomGraphMatrix.csv",sep=",",header = FALSE)
+Edgevalue<-read.csv("rnedge.csv",header = TRUE,sep = ",")
 #ful_n_frame<- graph.data.frame(fulnetwork,directed=FALSE)
 ful_n_frame<-graph.adjacency(testgraph,mode="undirected")
 
@@ -31,16 +31,16 @@ names<- get.vertex.attribute(ful_n_frame, "name")
 E(ful_n_frame)$weight<-Edgevalue$Edgevalue1
 
 deg<- degree(ful_n_frame)
-degsp<-V(ful_n_frame)[deg>4]
+degsp<-V(ful_n_frame)[deg>5]
 degspp<-as.numeric(degsp)
-degsp1<-V(ful_n_frame)[deg==4]
+degsp1<-V(ful_n_frame)[deg==5]
 degspp1<-as.numeric(degsp1)
-degsppa<-sample(degspp1,2, replace=F)
+degsppa<-sample(degspp1,1, replace=F)
 obsdeg<-c(degspp,degsppa)
-sourcematrix<-c(10)
+sourcematrix<-c(9)
 for(xlm in 1:100)
 {
-b <- sample(obsdeg,15, replace=F)
+b <- sample(obsdeg,20, replace=F)
 obsnum<-length(b)
 length(obsdist)<-obsnum
 for(ik in 1:obsnum)
@@ -198,11 +198,11 @@ commonpathe <- function(k,l) #we don't need any information of observer.Simply t
 		mat3<-matrix(d,matrix_order)
 		transpose_detmean<-t(as.matrix(as.numeric(mat2)))
 
-		if(round(det(mat1))==0)
-		{
-		s[i]=0
-		next
-		}
+		#if(round(det(mat1))==0)
+		#{
+		#s[i]=0
+		#next
+		#}
 
 		#covarance_inverse<-solve(mat1)
 covarance_inverse<-matrix(ginv(as.numeric(mat1)),matrix_order,matrix_order)
@@ -225,7 +225,7 @@ if (s_sort$x[N]==s_sort$x[N-1])
 {
 var5<-var5+1
 }
-sourcematrix<-c(10)
+sourcematrix<-c(9)
 spath<-list()
 
 #For path distribution
